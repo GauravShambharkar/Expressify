@@ -187,10 +187,10 @@ generateRoute.post("/generate", async (req, res) => {
     }
 
     // node_modules content
-    const nodeModuleDir = path.join(__dirname, "../node_modules");
-    if (fs.existsSync(nodeModuleDir)) {
-      await archive.directory(nodeModuleDir, `${directoryName}/node_modules`);
-    }
+    // const nodeModuleDir = path.join(__dirname, "../node_modules");
+    // if (fs.existsSync(nodeModuleDir)) {
+    //   await archive.directory(nodeModuleDir, `${directoryName}/node_modules`);
+    // }
 
     // config.js content
     if (fs.existsSync(path.join(__dirname, "../readBackend/config.js"))) {

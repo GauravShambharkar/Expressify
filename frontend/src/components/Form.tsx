@@ -122,8 +122,8 @@ function App() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setIsLoading(true);
+
 
     try {
       // Filter out empty values and join with commas for backend
