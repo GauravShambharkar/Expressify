@@ -64,8 +64,10 @@ export const useBackendForm = () => {
         },
       );
 
-      saveAs(response.data, `${directoryName}.zip`);
       toast.success(`${directoryName} successfully generated`);
+      setTimeout(() => {
+        saveAs(response.data, `${directoryName}.zip`);
+      }, 1500)
     } catch (error) {
       console.error("Error generating backend:", error);
       toast.error("Error generating backend. Please try again.");
