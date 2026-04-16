@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { generateRoute } = require("../backend/routes/generate");
+const { generateRoute } = require("./routes/generate");
 const app = express();
 
 const corsOption = {

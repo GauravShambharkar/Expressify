@@ -4,6 +4,13 @@ const archiver = require("archiver");
 const { Router } = require("express");
 const generateRoute = Router();
 
+generateRoute.get("/", (_, res) => {
+  res.send({
+    msg: "health is well and good",
+    status: 200,
+  });
+});
+
 generateRoute.post("/generate", async (req, res) => {
   const {
     directoryName,
@@ -41,7 +48,7 @@ generateRoute.post("/generate", async (req, res) => {
     // });
 
     const serverFileContent = await fs.readFileSync(
-      path.join(__dirname, "../readBackend/server.js")
+      path.join(__dirname, "../readBackend/server.js"),
     );
     archive.append(serverFileContent, { name: `${directoryName}/server.js` });
 
@@ -52,12 +59,12 @@ generateRoute.post("/generate", async (req, res) => {
     if (
       controllerFileName &&
       fs.existsSync(
-        path.join(__dirname, "../readBackend/controllers/controller.js")
+        path.join(__dirname, "../readBackend/controllers/controller.js"),
       )
     ) {
       // const controllerFileNames = controllerFileName.split(",");
       const controller_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/controllers/controller.js")
+        path.join(__dirname, "../readBackend/controllers/controller.js"),
       );
 
       controllerFileName.forEach((fileName) => {
@@ -71,12 +78,12 @@ generateRoute.post("/generate", async (req, res) => {
     if (
       middlewareFileName &&
       fs.existsSync(
-        path.join(__dirname, "../readBackend/middleware/middleware.js")
+        path.join(__dirname, "../readBackend/middleware/middleware.js"),
       )
     ) {
       // const middlewareFileNames = middlewareFileName.split(",");
       const middleware_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/middleware/middleware.js")
+        path.join(__dirname, "../readBackend/middleware/middleware.js"),
       );
 
       middlewareFileName.forEach((fileName) => {
@@ -93,7 +100,7 @@ generateRoute.post("/generate", async (req, res) => {
     ) {
       // const modelFileNames = modelFileName.split(",");
       const model_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/Models/model.js")
+        path.join(__dirname, "../readBackend/Models/model.js"),
       );
 
       modelFileName.forEach((fileName) => {
@@ -115,12 +122,12 @@ generateRoute.post("/generate", async (req, res) => {
     if (
       schemaFileName &&
       fs.existsSync(
-        path.join(__dirname, "../readBackend/Models/schemas/schema.js")
+        path.join(__dirname, "../readBackend/Models/schemas/schema.js"),
       )
     ) {
       // const schemaFileNames = schemaFileName.split(",");
       const schema_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/Models/schemas/schema.js")
+        path.join(__dirname, "../readBackend/Models/schemas/schema.js"),
       );
 
       schemaFileName.forEach((fileName) => {
@@ -137,7 +144,7 @@ generateRoute.post("/generate", async (req, res) => {
     ) {
       // const routeFileNames = routeFileName.split(",");
       const route_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/routes/_route.js")
+        path.join(__dirname, "../readBackend/routes/_route.js"),
       );
 
       routeFileName.forEach((fileName) => {
@@ -154,7 +161,7 @@ generateRoute.post("/generate", async (req, res) => {
     ) {
       // const utilFileNames = utilFileName.split(",");
       const util_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/utils.js")
+        path.join(__dirname, "../readBackend/utils.js"),
       );
 
       utilFileName.forEach((fileName) => {
@@ -167,7 +174,7 @@ generateRoute.post("/generate", async (req, res) => {
     // package.json content
     if (fs.existsSync(path.join(__dirname, "../readBackend/package.json"))) {
       const package_jsonContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/package.json")
+        path.join(__dirname, "../readBackend/package.json"),
       );
       archive.append(package_jsonContent, {
         name: `${directoryName}/package.json`,
@@ -179,7 +186,7 @@ generateRoute.post("/generate", async (req, res) => {
       fs.existsSync(path.join(__dirname, "../readBackend/package-lock.json"))
     ) {
       const package_lock_jsonContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/package-lock.json")
+        path.join(__dirname, "../readBackend/package-lock.json"),
       );
       archive.append(package_lock_jsonContent, {
         name: `${directoryName}/package-lock.json`,
@@ -195,7 +202,7 @@ generateRoute.post("/generate", async (req, res) => {
     // config.js content
     if (fs.existsSync(path.join(__dirname, "../readBackend/config.js"))) {
       const config_fileContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/config.js")
+        path.join(__dirname, "../readBackend/config.js"),
       );
       archive.append(config_fileContent, {
         name: `${directoryName}/config.js`,
@@ -205,7 +212,7 @@ generateRoute.post("/generate", async (req, res) => {
     archive.finalize();
 
     console.log(
-      `ZIP file generated successfully for directory: ${directoryName}`
+      `ZIP file generated successfully for directory: ${directoryName}`,
     );
   } catch (err) {
     console.error("Error generating ZIP file:", err);

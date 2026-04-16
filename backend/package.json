@@ -19,7 +19,6 @@
     "express": "^5.1.0",
     "fs-extra": "^11.3.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.5",
-    "node": "^20.19.4"
+    "mongoose": "^8.16.5"
   }
 }
