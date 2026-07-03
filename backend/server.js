@@ -5,7 +5,7 @@ const app = express();
 
 const corsOption = {
   methods: ["GET", "POST", "PUT", "DELETE"],
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://expressify-beta.vercel.app/"],
   credentials: true,
 };
 

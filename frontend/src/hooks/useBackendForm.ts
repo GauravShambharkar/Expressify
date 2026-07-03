@@ -1,17 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
 
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV
+  ? "http://localhost:3000/generate"
+  : "https://expressify-beta.vercel.app/generate");
+
+const getSavedArray = (key: string): string[] => {
+  try {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : [""];
+  } catch (error) {
+    console.error(`Error parsing localStorage key "${key}":`, error);
+    return [""];
+  }
+};
+
 export const useBackendForm = () => {
-  const [directoryName, setDirectoryName] = useState("");
-  const [controllerNames, setControllerNames] = useState([""]);
-  const [middlewareNames, setMiddlewareNames] = useState([""]);
-  const [modelNames, setModelNames] = useState([""]);
-  const [routeNames, setRouteNames] = useState([""]);
-  const [schemaNames, setSchemaNames] = useState([""]);
-  const [utilNames, setUtilNames] = useState([""]);
+  const [directoryName, setDirectoryName] = useState(() => {
+    return localStorage.getItem("backend_directoryName") || "";
+  });
+  const [controllerNames, setControllerNames] = useState<string[]>(() =>
+    getSavedArray("backend_controllerNames")
+  );
+  const [middlewareNames, setMiddlewareNames] = useState<string[]>(() =>
+    getSavedArray("backend_middlewareNames")
+  );
+  const [modelNames, setModelNames] = useState<string[]>(() =>
+    getSavedArray("backend_modelNames")
+  );
+  const [routeNames, setRouteNames] = useState<string[]>(() =>
+    getSavedArray("backend_routeNames")
+  );
+  const [schemaNames, setSchemaNames] = useState<string[]>(() =>
+    getSavedArray("backend_schemaNames")
+  );
+  const [utilNames, setUtilNames] = useState<string[]>(() =>
+    getSavedArray("backend_utilNames")
+  );
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("backend_directoryName", directoryName);
+    localStorage.setItem("backend_controllerNames", JSON.stringify(controllerNames));
+    localStorage.setItem("backend_middlewareNames", JSON.stringify(middlewareNames));
+    localStorage.setItem("backend_modelNames", JSON.stringify(modelNames));
+    localStorage.setItem("backend_routeNames", JSON.stringify(routeNames));
+    localStorage.setItem("backend_schemaNames", JSON.stringify(schemaNames));
+    localStorage.setItem("backend_utilNames", JSON.stringify(utilNames));
+  }, [
+    directoryName,
+    controllerNames,
+    middlewareNames,
+    modelNames,
+    routeNames,
+    schemaNames,
+    utilNames,
+  ]);
 
   const addField = (setter: React.Dispatch<React.SetStateAction<string[]>>) => {
     setter((prev) => [...prev, ""]);
@@ -49,7 +95,7 @@ export const useBackendForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/generate",
+        API_URL,
         {
           directoryName,
           controllerFileName: controllerNames.filter((n) => n.trim()),
@@ -67,7 +113,7 @@ export const useBackendForm = () => {
       toast.success(`${directoryName} successfully generated`);
       setTimeout(() => {
         saveAs(response.data, `${directoryName}.zip`);
-      }, 1500)
+      }, 1500);
     } catch (error) {
       console.error("Error generating backend:", error);
       toast.error("Error generating backend. Please try again.");
@@ -99,8 +145,10 @@ export const useBackendForm = () => {
         removeField(i, setControllerNames, controllerNames),
       removeMiddlewareField: (i: number) =>
         removeField(i, setMiddlewareNames, middlewareNames),
-      removeModelField: (i: number) => removeField(i, setModelNames, modelNames),
-      removeRouteField: (i: number) => removeField(i, setRouteNames, routeNames),
+      removeModelField: (i: number) =>
+        removeField(i, setModelNames, modelNames),
+      removeRouteField: (i: number) =>
+        removeField(i, setRouteNames, routeNames),
       removeSchemaField: (i: number) =>
         removeField(i, setSchemaNames, schemaNames),
       removeUtilField: (i: number) => removeField(i, setUtilNames, utilNames),

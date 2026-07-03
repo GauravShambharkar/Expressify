@@ -181,17 +181,7 @@ generateRoute.post("/generate", async (req, res) => {
       });
     }
 
-    // package-lock.json content
-    if (
-      fs.existsSync(path.join(__dirname, "../readBackend/package-lock.json"))
-    ) {
-      const package_lock_jsonContent = fs.readFileSync(
-        path.join(__dirname, "../readBackend/package-lock.json"),
-      );
-      archive.append(package_lock_jsonContent, {
-        name: `${directoryName}/package-lock.json`,
-      });
-    }
+
 
     // node_modules content
     // const nodeModuleDir = path.join(__dirname, "../node_modules");
