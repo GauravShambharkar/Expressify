@@ -7,7 +7,7 @@ const API_URL =
   import.meta.env.VITE_API_URL ||
   (import.meta.env.DEV
     ? "http://localhost:3000/api/generate"
-    : "https://expressify-beta.vercel.app/api/generate");
+    : "https://expressify-m5a2.onrender.com/api/generate");
 
 const getSavedArray = (key: string): string[] => {
   try {
