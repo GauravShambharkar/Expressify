@@ -19,21 +19,21 @@ function App() {
   } = state;
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4 font-sans antialiased text-black">
+    <div className="min-h-screen bg-white py-4 px-4 font-sans antialiased text-black">
       <Toaster visibleToasts={3} position="bottom-center" />
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <FormHeader />
 
         <form
           onSubmit={actions.handleFormSubmit}
-          className="bg-white rounded-xl shadow-xl border border-gray-100 p-8 transition-all hover:shadow-2xl"
+          className="bg-white rounded-xl shadow-lg border border-gray-100 p-5 transition-all hover:shadow-xl"
         >
-          <div className="space-y-8">
+          <div className="space-y-4">
             {/* Directory Section */}
-            <div className="space-y-3">
+            <div className="space-y-1.5">
               <div className="flex items-center gap-2">
-                <Code className="w-5 h-5 text-gray-500" />
-                <label className="text-sm font-semibold tracking-wide uppercase text-gray-700">
+                <Code className="w-4 h-4 text-gray-500" />
+                <label className="text-xs font-semibold tracking-wide uppercase text-gray-700">
                   Root Directory Name
                 </label>
               </div>
@@ -42,15 +42,15 @@ function App() {
                 value={directoryName}
                 onChange={(e) => actions.setDirectoryName(e.target.value)}
                 placeholder="Enter root directory name (e.g., backend-api)..."
-                className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg shadow-sm text-sm
-                           placeholder:text-gray-400 focus:outline-none focus:ring-4 
-                           focus:ring-black/5 focus:border-black transition-all duration-200"
+                className="w-full px-3 py-2 border-2 border-gray-100 rounded-lg shadow-sm text-sm
+                           placeholder:text-gray-400 focus:outline-none focus:ring-2 
+                           focus:ring-black focus:border-black transition-all duration-200"
                 required
                 disabled={isLoading}
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormSection
                 label="Controllers"
                 names={controllerNames}
@@ -106,13 +106,13 @@ function App() {
               />
             </div>
 
-            <div className="pt-6 border-t border-gray-100">
+            <div className="pt-4 border-t border-gray-100">
               <GenerateButton isLoading={isLoading} />
             </div>
           </div>
         </form>
 
-        <div className="text-center mt-8 text-sm font-medium text-gray-400 uppercase tracking-widest">
+        <div className="text-center mt-4 text-xs font-medium text-gray-400 uppercase tracking-widest">
           Build faster, generate cleaner.
         </div>
       </div>
