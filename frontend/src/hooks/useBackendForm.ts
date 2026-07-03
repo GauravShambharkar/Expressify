@@ -3,9 +3,11 @@ import axios from "axios";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
 
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV
-  ? "http://localhost:3000/generate"
-  : "https://expressify-beta.vercel.app/generate");
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? "http://localhost:3000/api/generate"
+    : "https://expressify-beta.vercel.app/api/generate");
 
 const getSavedArray = (key: string): string[] => {
   try {
@@ -22,29 +24,35 @@ export const useBackendForm = () => {
     return localStorage.getItem("backend_directoryName") || "";
   });
   const [controllerNames, setControllerNames] = useState<string[]>(() =>
-    getSavedArray("backend_controllerNames")
+    getSavedArray("backend_controllerNames"),
   );
   const [middlewareNames, setMiddlewareNames] = useState<string[]>(() =>
-    getSavedArray("backend_middlewareNames")
+    getSavedArray("backend_middlewareNames"),
   );
   const [modelNames, setModelNames] = useState<string[]>(() =>
-    getSavedArray("backend_modelNames")
+    getSavedArray("backend_modelNames"),
   );
   const [routeNames, setRouteNames] = useState<string[]>(() =>
-    getSavedArray("backend_routeNames")
+    getSavedArray("backend_routeNames"),
   );
   const [schemaNames, setSchemaNames] = useState<string[]>(() =>
-    getSavedArray("backend_schemaNames")
+    getSavedArray("backend_schemaNames"),
   );
   const [utilNames, setUtilNames] = useState<string[]>(() =>
-    getSavedArray("backend_utilNames")
+    getSavedArray("backend_utilNames"),
   );
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("backend_directoryName", directoryName);
-    localStorage.setItem("backend_controllerNames", JSON.stringify(controllerNames));
-    localStorage.setItem("backend_middlewareNames", JSON.stringify(middlewareNames));
+    localStorage.setItem(
+      "backend_controllerNames",
+      JSON.stringify(controllerNames),
+    );
+    localStorage.setItem(
+      "backend_middlewareNames",
+      JSON.stringify(middlewareNames),
+    );
     localStorage.setItem("backend_modelNames", JSON.stringify(modelNames));
     localStorage.setItem("backend_routeNames", JSON.stringify(routeNames));
     localStorage.setItem("backend_schemaNames", JSON.stringify(schemaNames));
